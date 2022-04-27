@@ -3,27 +3,26 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { App } from "./App";
+import { AppProvider } from "./contexts";
 import "./index.css";
 
 const theme = createTheme({
   palette: {
     primary: {
-      // light: will be calculated from palette.primary.main,
       main: "#6141ac",
-      // dark: will be calculated from palette.primary.main,
-      // contrastText: will be calculated to contrast with palette.primary.main
     },
     secondary: {
-      main: "#0044ff",
+      main: "#9c88ca",
     },
-  
   },
 });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <ThemeProvider theme={theme}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <AppProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </AppProvider>
   </ThemeProvider>
 );
