@@ -2,13 +2,26 @@ import { Box, Button, Grid, Link, Paper, TextField } from "@mui/material";
 import React, { useState } from "react";
 import BackgroundImg from "../../../assets/images/login-bg.jpg";
 import LogoImg from "../../../assets/images/logo.png";
+import { useLoading } from "../../../hooks/useLoading";
+import { useAlert } from "../../../hooks/useAlert";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const { showLoading, hideLoading } = useLoading();
+  const Alert = useAlert();
 
   const signIn = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    try {
+      showLoading();
+    } catch (err: any) {
+      console.log({ err });
+      Alert.error.show();
+    } finally {
+      hideLoading();
+    }
   };
 
   const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
