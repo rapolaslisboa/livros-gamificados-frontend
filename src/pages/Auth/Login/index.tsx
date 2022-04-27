@@ -1,0 +1,101 @@
+import { Box, Button, Grid, Link, Paper, TextField } from "@mui/material";
+import React, { useState } from "react";
+import BackgroundImg from "../../../assets/images/login-bg.jpg";
+import LogoImg from "../../../assets/images/logo.png";
+
+const Login = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const signIn = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
+
+  const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+  };
+
+  return (
+    <Grid container component="main" sx={{ height: "100vh" }}>
+      <Grid
+        item
+        xs={false}
+        sm={4}
+        md={7}
+        sx={{
+          overflow: "hidden",
+          backgroundImage: `url(${BackgroundImg})`,
+          backgroundRepeat: "no-repeat",
+          backgroundColor: (t) =>
+            t.palette.mode === "light"
+              ? t.palette.grey[50]
+              : t.palette.grey[900],
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Box
+          sx={{
+            my: 8,
+            mx: 4,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <img style={{ width: "100%", maxWidth: 450 }} src={LogoImg} />
+          <form onSubmit={signIn}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              value={email}
+              id="email"
+              label="E-mail"
+              onChange={handleEmail}
+              name="email"
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              value={password}
+              name="password"
+              label="Senha"
+              onChange={handlePassword}
+              type="password"
+              id="password"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Entrar
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Esqueceu sua senha?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="#" variant="body2">
+                  Ainda não se cadastrou? Cadastre-se
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
+        </Box>
+      </Grid>
+    </Grid>
+  );
+};
+
+export { Login };
