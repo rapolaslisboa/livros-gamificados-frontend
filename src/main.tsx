@@ -7,6 +7,18 @@ import { AppProvider } from "./contexts";
 import "./index.css";
 
 const theme = createTheme({
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 20,
+          textTransform: "capitalize",
+          fontWeight: 400,
+          fontSize: "0.975rem",
+        },
+      },
+    },
+  },
   palette: {
     primary: {
       main: "#6141ac",

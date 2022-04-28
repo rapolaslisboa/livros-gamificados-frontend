@@ -46,6 +46,12 @@ const SignUp = () => {
     setPassword(event.target.value);
   };
 
+  // border-radius: 20px;
+  // max-width: 300px;
+  // display: flex;
+  // margin-right: auto;
+  // margin-left: auto;
+
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
       <Grid
@@ -75,15 +81,15 @@ const SignUp = () => {
             alignItems: "center",
           }}
         >
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h4">
             Cadastre-se
           </Typography>
-          <Typography mt={2} component="h3" variant="body1">
+          <Typography textAlign="center" mt={2} component="h3" variant="body1">
             Crie uma conta e acesse nossa plataforma!
           </Typography>
-          <form style={{ marginTop: 60 }} onSubmit={signUp}>
+          <form style={{ marginTop: 40, maxWidth: 350 }} onSubmit={signUp}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
@@ -93,7 +99,7 @@ const SignUp = () => {
                   label="Nome"
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
@@ -132,7 +138,11 @@ const SignUp = () => {
             </Button>
             <Grid container justifyContent="center">
               <Grid item>
-                <Link href={RouteNames.Login()} variant="body2">
+                <Link
+                  underline="hover"
+                  href={RouteNames.Login()}
+                  variant="body2"
+                >
                   Já possui uma conta? Logue
                 </Link>
               </Grid>

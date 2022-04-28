@@ -63,7 +63,7 @@ const Login = () => {
           }}
         >
           <img style={{ width: "100%", maxWidth: 450 }} src={LogoImg} />
-          <form onSubmit={signIn}>
+          <form style={{ maxWidth: 350 }} onSubmit={signIn}>
             <TextField
               margin="normal"
               required
@@ -93,14 +93,23 @@ const Login = () => {
             >
               Entrar
             </Button>
-            <Grid container>
+            <Grid
+              flexDirection="column"
+              rowGap={1}
+              alignItems="center"
+              container
+            >
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link underline="hover" href="#" variant="body2">
                   Esqueceu sua senha?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href={RouteNames.SignUp()} variant="body2">
+                <Link
+                  underline="hover"
+                  href={RouteNames.SignUp()}
+                  variant="body2"
+                >
                   Ainda não se cadastrou? Cadastre-se
                 </Link>
               </Grid>
