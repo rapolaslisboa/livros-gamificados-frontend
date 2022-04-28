@@ -4,6 +4,7 @@ import BackgroundImg from "../../../assets/images/login-bg.jpg";
 import LogoImg from "../../../assets/images/logo.png";
 import { useLoading } from "../../../hooks/useLoading";
 import { useAlert } from "../../../hooks/useAlert";
+import { RouteNames } from "../../../routes/RouteNames";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -99,7 +100,7 @@ const Login = () => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href={RouteNames.SignUp()} variant="body2">
                   Ainda não se cadastrou? Cadastre-se
                 </Link>
               </Grid>
