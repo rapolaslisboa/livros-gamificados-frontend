@@ -1,6 +1,8 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Button, Grid, Link, Paper, TextField } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
+import * as Yup from "yup";
 import BackgroundImg from "../../../assets/images/login-bg.jpg";
 import LogoImg from "../../../assets/images/logo.png";
 import { useAlert } from "../../../hooks/useAlert";
@@ -12,6 +14,17 @@ type LoginFormProps = {
   password: string;
 };
 
+const formSchema = Yup.object().shape({
+  email: Yup.string()
+    .required("O e-mail é obrigatório")
+    .email("E-mail inválido"),
+  password: Yup.string()
+    .required("A senha é obrigatória")
+    .min(5, "A senha deve conter ao menos 5 caracteres"),
+});
+
+const formOptions = { resolver: yupResolver(formSchema) };
+
 const Login = () => {
   const { showLoading, hideLoading } = useLoading();
   const Alert = useAlert();
@@ -19,10 +32,11 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormProps>();
+  } = useForm<LoginFormProps>(formOptions);
 
   const signIn = (data: LoginFormProps) => {
-    console.log(data);
+    const { email, password } = data;
+
     try {
       showLoading();
     } catch (err: any) {
@@ -67,16 +81,9 @@ const Login = () => {
             <TextField
               margin="normal"
               fullWidth
-              required
               id="email"
               inputProps={{
-                ...register("email", {
-                  required: true,
-                  pattern: {
-                    value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                    message: "Digite um e-mail válido",
-                  },
-                }),
+                ...register("email"),
               }}
               error={Boolean(errors?.email)}
               helperText={errors?.email?.message}
@@ -86,16 +93,9 @@ const Login = () => {
             <TextField
               margin="normal"
               fullWidth
-              required
               name="password"
               inputProps={{
-                ...register("password", {
-                  required: true,
-                  minLength: {
-                    value: 5,
-                    message: "A senha deve conter ao menos 5 dígitos",
-                  },
-                }),
+                ...register("password"),
               }}
               label="Senha"
               type="password"
