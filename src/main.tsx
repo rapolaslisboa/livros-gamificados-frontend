@@ -18,6 +18,13 @@ const theme = createTheme({
         },
       },
     },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          marginLeft: 5,
+        },
+      },
+    },
   },
   palette: {
     primary: {
