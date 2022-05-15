@@ -1,20 +1,28 @@
 import { Box, Button, Grid, Link, Paper, TextField } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
 import BackgroundImg from "../../../assets/images/login-bg.jpg";
 import LogoImg from "../../../assets/images/logo.png";
-import { useLoading } from "../../../hooks/useLoading";
 import { useAlert } from "../../../hooks/useAlert";
+import { useLoading } from "../../../hooks/useLoading";
 import { RouteNames } from "../../../routes/RouteNames";
 
+type LoginFormProps = {
+  email: string;
+  password: string;
+};
+
 const Login = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
   const { showLoading, hideLoading } = useLoading();
   const Alert = useAlert();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormProps>();
 
-  const signIn = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const signIn = (data: LoginFormProps) => {
+    console.log(data);
     try {
       showLoading();
     } catch (err: any) {
@@ -23,14 +31,6 @@ const Login = () => {
     } finally {
       hideLoading();
     }
-  };
-
-  const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
   };
 
   return (
@@ -63,26 +63,44 @@ const Login = () => {
           }}
         >
           <img style={{ width: "100%", maxWidth: 450 }} src={LogoImg} />
-          <form style={{ maxWidth: 350 }} onSubmit={signIn}>
+          <form style={{ maxWidth: 350 }} onSubmit={handleSubmit(signIn)}>
             <TextField
               margin="normal"
-              required
               fullWidth
-              value={email}
+              required
               id="email"
+              inputProps={{
+                ...register("email", {
+                  required: true,
+                  pattern: {
+                    value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                    message: "Digite um e-mail válido",
+                  },
+                }),
+              }}
+              error={Boolean(errors?.email)}
+              helperText={errors?.email?.message}
               label="E-mail"
-              onChange={handleEmail}
               name="email"
             />
             <TextField
               margin="normal"
-              required
               fullWidth
-              value={password}
+              required
               name="password"
+              inputProps={{
+                ...register("password", {
+                  required: true,
+                  minLength: {
+                    value: 5,
+                    message: "A senha deve conter ao menos 5 dígitos",
+                  },
+                }),
+              }}
               label="Senha"
-              onChange={handlePassword}
               type="password"
+              error={Boolean(errors?.password)}
+              helperText={errors?.password?.message}
               id="password"
             />
             <Button
