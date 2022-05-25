@@ -1,9 +1,8 @@
-import { Routes, Route } from "react-router-dom";
-import { SignUp } from "../../pages/Auth/SignUp";
-import { Dashboard } from "../../pages/Main/Dashboard";
+import { Route, Routes } from "react-router-dom";
 import { Login } from "../../pages/Auth/Login";
-import { RouteNames } from "../RouteNames";
+import { SignUp } from "../../pages/Auth/SignUp";
 import { NotFound } from "../../pages/NotFound";
+import { RouteNames } from "../RouteNames";
 
 const PublicRoutes = () => (
   <Routes>
