@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const userService = () => {
-  const baseUrl = process.env.REACT_APP_API_URL;
+  const baseUrl = "https://livros-gamificados-api.herokuapp.com/api";
 
   const identity = axios.create({
     baseURL: baseUrl,

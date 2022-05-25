@@ -3,11 +3,11 @@ import { AlertProvider } from "./AlertContext";
 import { AuthProvider } from "./AuthContext";
 import { LoadingProvider } from "./LoadingContext";
 
-type Props = {
+type AppProviderProps = {
   children: React.ReactNode;
 };
 
-const AppProvider = ({ children }: Props) => (
+const AppProvider = ({ children }: AppProviderProps) => (
   <AlertProvider>
     <LoadingProvider>
       <AuthProvider>{children}</AuthProvider>

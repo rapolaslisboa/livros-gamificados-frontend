@@ -31,11 +31,12 @@ import { mainListItems } from "./components/ListItems";
 
 const Dashboard = () => {
   const [open, setOpen] = React.useState(true);
-  const { signOut } = useAuth();
+  const { signOut, user } = useAuth();
   const navigate = useNavigate();
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
   const theme = useTheme();
 
   const logout = () => {
@@ -83,7 +84,7 @@ const Dashboard = () => {
                 <IconButton color="inherit">
                   <Avatar
                     style={{ backgroundColor: "#302a55", fontSize: "1.05rem" }}
-                    {...stringAvatar("Felipe Maruyama")}
+                    {...stringAvatar(`${user?.firstName} ${user?.lastName}`)}
                   />
                 </IconButton>
               </Grid>
@@ -130,7 +131,7 @@ const Dashboard = () => {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              <Grid item xs={12} md={8} lg={12}>
+              <Grid item xs={12} md={12} lg={12}>
                 <Paper
                   style={{
                     boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
@@ -144,8 +145,8 @@ const Dashboard = () => {
                     height: 500,
                   }}
                 >
-                  <Typography variant="h3" component="h1">
-                    Olá, Felipe! Seu plano é VIP
+                  <Typography variant="h4" component="h1">
+                    {`Olá, ${user?.name}! Seu plano é ${user?.subscriptionPlan}`}
                   </Typography>
                 </Paper>
               </Grid>

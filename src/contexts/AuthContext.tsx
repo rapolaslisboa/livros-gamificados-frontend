@@ -7,6 +7,7 @@ interface AuthContextProps {
   getUser(): Promise<{ [key: string]: any } | undefined>;
   authenticate(email: string, password: string): Promise<void>;
   signOut(): void;
+  user: { [key: string]: any } | null;
 }
 
 const AuthContext = createContext({} as AuthContextProps);
@@ -21,11 +22,10 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
   const authenticate = async (email: string, password: string) => {
     const { login } = authService();
     const { getUserInfo } = userService();
-    const result = await login({ email, password });
-    // localStorage.setItem("token", result.token!);
-    // localStorage.setItem("refreshToken", result.refreshToken!);
-    // const userInfo = await userInfo();
-    // setUser(userInfo);
+    const response = await login({ email, password });
+    localStorage.setItem("token", response.data.accessToken!);
+    const userInfo = await getUserInfo();
+    setUser(userInfo);
     setUser({});
   };
 
@@ -37,7 +37,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
 
   const getUser = async () => {
     if (user) return user;
-    const tokenExists = localStorage.getItem("token");
+    const tokenExists = localStorage.getItem("accesToken");
 
     if (tokenExists) {
       try {
@@ -55,6 +55,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
     authenticate,
     getUser,
     signOut,
+    user,
   };
 
   useEffect(() => {

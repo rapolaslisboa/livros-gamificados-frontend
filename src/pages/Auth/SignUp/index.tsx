@@ -27,7 +27,7 @@ type SignUpFormProps = {
   lastName: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  passwordConfirmation: string;
   subscriptionPlan: string;
 };
 
@@ -44,7 +44,7 @@ const formSchema = Yup.object().shape({
   password: Yup.string()
     .required("A senha é obrigatória")
     .min(5, "A senha deve conter ao menos 5 caracteres"),
-  confirmPassword: Yup.string()
+  passwordConfirmation: Yup.string()
     .required("A senha de confirmação é obrigatória")
     .oneOf([Yup.ref("password")], "As senhas não conferem"),
   subscriptionPlan: Yup.string().required(),
@@ -61,6 +61,7 @@ const SignUp = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm<SignUpFormProps>(formOptions);
 
   const signUp = async (data: SignUpFormProps, event?: React.BaseSyntheticEvent) => {
@@ -69,13 +70,12 @@ const SignUp = () => {
       const { signUp } = authService();
       showLoading();
       await signUp(data);
-      // Alert.success.show("Cadastro realizado com sucesso!");
-      // setTimeout(() => {
-      //   navigate(RouteNames.Login());
-      // }, 5000);
+      alert("Cadastro realizado com sucesso!")
+      setTimeout(() => {
+        navigate(RouteNames.Login());
+      }, 1000);
     } catch (err: any) {
       console.log({ err });
-      // Alert.error.show();
     } finally {
       hideLoading();
     }
@@ -186,16 +186,16 @@ const SignUp = () => {
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  name="confirmPassword"
+                  name="passwordConfirmation"
                   label="Confirmar Senha"
-                  data-testid="ConfirmPassword.Input"
+                  data-testid="PasswordConfirmation.Input"
                   inputProps={{
-                    ...register("confirmPassword"),
+                    ...register("passwordConfirmation"),
                   }}
-                  error={Boolean(errors?.confirmPassword)}
-                  helperText={errors?.confirmPassword?.message}
+                  error={Boolean(errors?.passwordConfirmation)}
+                  helperText={errors?.passwordConfirmation?.message}
                   type="password"
-                  id="confirmPassword"
+                  id="passwordConfirmation"
                 />
               </Grid>
               <Grid item xs={12}>

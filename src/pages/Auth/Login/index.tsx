@@ -43,10 +43,11 @@ const Login = () => {
 
     try {
       showLoading();
-      authenticate(email, password);
+      await authenticate(email, password);
       navigate(RouteNames.Dashboard());
     } catch (err: any) {
       console.log({ err });
+      alert("Usuário ou senha inválidos");
       // Alert.error.show();
     } finally {
       hideLoading();
