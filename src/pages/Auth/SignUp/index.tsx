@@ -75,7 +75,7 @@ const SignUp = () => {
       // }, 5000);
     } catch (err: any) {
       console.log({ err });
-      Alert.error.show();
+      // Alert.error.show();
     } finally {
       hideLoading();
     }

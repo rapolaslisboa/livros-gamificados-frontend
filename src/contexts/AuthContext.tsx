@@ -5,7 +5,7 @@ import { userService } from "../services/userService";
 interface AuthContextProps {
   authenticated: boolean;
   getUser(): Promise<{ [key: string]: any } | undefined>;
-  authenticate(email: string, password: string): void;
+  authenticate(email: string, password: string): Promise<void>;
   signOut(): void;
 }
 
@@ -21,14 +21,12 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
   const authenticate = async (email: string, password: string) => {
     const { login } = authService();
     const { getUserInfo } = userService();
-    // const result = await login({ email, password });
+    const result = await login({ email, password });
     // localStorage.setItem("token", result.token!);
     // localStorage.setItem("refreshToken", result.refreshToken!);
     // const userInfo = await userInfo();
     // setUser(userInfo);
-    // Temporary
     setUser({});
-    // return userInfo;
   };
 
   const signOut = async () => {

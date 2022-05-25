@@ -38,7 +38,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { authenticate } = useAuth();
 
-  const signIn = (data: LoginFormProps) => {
+  const signIn = async (data: LoginFormProps) => {
     const { email, password } = data;
 
     try {
@@ -47,7 +47,7 @@ const Login = () => {
       navigate(RouteNames.Dashboard());
     } catch (err: any) {
       console.log({ err });
-      Alert.error.show();
+      // Alert.error.show();
     } finally {
       hideLoading();
     }

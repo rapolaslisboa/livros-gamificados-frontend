@@ -17,11 +17,11 @@ function Alert(props: AlertProps) {
   return <MuiAlert elevation={1} {...props} />;
 }
 
-type Props = {
+type AlertProviderProps = {
   children: React.ReactNode;
 };
 
-const AlertProvider: React.FC<Props> = ({ children }) => {
+const AlertProvider = ({ children }: AlertProviderProps) => {
   const [message, setMessage] = useState<string | null>(null);
   const [type, setType] = useState<"success" | "info" | "warning" | "error">(
     "info"

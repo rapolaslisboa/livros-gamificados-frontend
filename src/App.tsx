@@ -7,6 +7,8 @@ const App = () => {
   const { authenticated } = useAuth();
   let routes = <PublicRoutes />;
 
+  // console.log(authenticated);
+
   if (authenticated) {
     routes = <PrivateRoutes />;
   }
