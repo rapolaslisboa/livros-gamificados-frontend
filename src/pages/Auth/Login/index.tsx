@@ -2,10 +2,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Button, Grid, Link, Paper, TextField } from "@mui/material";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import BackgroundImg from "../../../assets/images/login-bg.jpg";
 import LogoImg from "../../../assets/images/logo.png";
 import { useAlert } from "../../../hooks/useAlert";
+import { useAuth } from "../../../hooks/useAuth";
 import { useLoading } from "../../../hooks/useLoading";
 import { RouteNames } from "../../../routes/RouteNames";
 
@@ -33,12 +35,17 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormProps>(formOptions);
+  const navigate = useNavigate();
+  const { authenticate } = useAuth();
 
   const signIn = (data: LoginFormProps) => {
     const { email, password } = data;
 
+
     try {
       showLoading();
+      authenticate(email, password);
+      navigate(RouteNames.Dashboard());
     } catch (err: any) {
       console.log({ err });
       Alert.error.show();
