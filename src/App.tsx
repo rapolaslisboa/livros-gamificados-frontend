@@ -1,16 +1,15 @@
 import React, { Fragment } from "react";
-import { Route, Routes } from "react-router-dom";
-import { Login } from "./pages/Auth/Login";
-import { RouteNames } from "./routes/RouteNames";
-import { SignUp } from "./pages/Auth/SignUp";
+import { useAuth } from "./hooks/useAuth";
+import { PrivateRoutes } from "./routes/private";
+import { PublicRoutes } from "./routes/public";
 
 const App = () => {
-  const routes = (
-    <Routes>
-      <Route path={RouteNames.Login()} element={<Login />} />
-      <Route path={RouteNames.SignUp()} element={<SignUp />} />
-    </Routes>
-  );
+  const { authenticated } = useAuth();
+  let routes = <PublicRoutes />;
+
+  if (authenticated) {
+    routes = <PrivateRoutes />;
+  }
 
   return <Fragment>{routes}</Fragment>;
 };
