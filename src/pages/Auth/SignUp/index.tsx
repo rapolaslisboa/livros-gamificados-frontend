@@ -20,6 +20,7 @@ import BackgroundImg from "../../../assets/images/signup-bg.jpg";
 import { useAlert } from "../../../hooks/useAlert";
 import { useLoading } from "../../../hooks/useLoading";
 import { RouteNames } from "../../../routes/RouteNames";
+import { authService } from "../../../services/authService";
 
 type SignUpFormProps = {
   firstName: string;
@@ -62,12 +63,12 @@ const SignUp = () => {
     formState: { errors },
   } = useForm<SignUpFormProps>(formOptions);
 
-  const signUp = (data: SignUpFormProps, event?: React.BaseSyntheticEvent) => {
+  const signUp = async (data: SignUpFormProps, event?: React.BaseSyntheticEvent) => {
     event?.preventDefault();
-    console.log(data);
     try {
-      // showLoading();
-      console.log(Alert);
+      const { signUp } = authService();
+      showLoading();
+      await signUp(data);
       // Alert.success.show("Cadastro realizado com sucesso!");
       // setTimeout(() => {
       //   navigate(RouteNames.Login());
@@ -76,7 +77,7 @@ const SignUp = () => {
       console.log({ err });
       Alert.error.show();
     } finally {
-      // hideLoading();
+      hideLoading();
     }
   };
 

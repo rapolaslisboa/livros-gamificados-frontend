@@ -41,7 +41,6 @@ const Login = () => {
   const signIn = (data: LoginFormProps) => {
     const { email, password } = data;
 
-
     try {
       showLoading();
       authenticate(email, password);
