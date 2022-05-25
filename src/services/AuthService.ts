@@ -10,12 +10,12 @@ type SignUpData = {
   lastName: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  passwordConfirmation: string;
   subscriptionPlan: string;
 };
 
 const authService = () => {
-  const baseUrl = process.env.REACT_APP_API_URL;
+  const baseUrl = "https://livros-gamificados-api.herokuapp.com/api";
 
   const identity = axios.create({
     baseURL: baseUrl,
