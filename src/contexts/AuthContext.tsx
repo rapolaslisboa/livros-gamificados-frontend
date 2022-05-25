@@ -3,7 +3,7 @@ import React, { createContext, useEffect, useState } from "react";
 interface AuthContextProps {
   authenticated: boolean;
   getUser(): Promise<{ [key: string]: any } | undefined>;
-  signIn(email: string, password: string): void;
+  authenticate(email: string, password: string): void;
   signOut(): void;
 }
 
@@ -16,13 +16,16 @@ type Props = {
 const AuthProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<{ [key: string]: any } | null>(null);
 
-  const signIn = async (email: string, password: string) => {
+  const authenticate = async (email: string, password: string) => {
     // const result = await authService.login({ email, password });
     // if (!result) throw new Error("Unexpected error on login");
     // localStorage.setItem("token", result.token!);
     // localStorage.setItem("refreshToken", result.refreshToken!);
     // const userData = await customerService.getCustomer();
     // setUser(userData);
+    // Temporary
+    setUser({});
+    console.log(!!{});
     // return userData;
   };
 
@@ -49,7 +52,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
 
   const sharedValues: AuthContextProps = {
     authenticated: !!user,
-    signIn,
+    authenticate,
     getUser,
     signOut,
   };
@@ -64,4 +67,3 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
 };
 
 export { AuthContext, AuthProvider };
-
