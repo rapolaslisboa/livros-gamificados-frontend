@@ -1,56 +1,88 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Box,
   Button,
+  FormControl,
   Grid,
+  InputLabel,
   Link,
+  MenuItem,
   Paper,
   TextField,
   Typography,
 } from "@mui/material";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
 import BackgroundImg from "../../../assets/images/signup-bg.jpg";
 import { useAlert } from "../../../hooks/useAlert";
 import { useLoading } from "../../../hooks/useLoading";
 import { RouteNames } from "../../../routes/RouteNames";
 
+type SignUpFormProps = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  subscriptionPlan: string;
+};
+
+const formSchema = Yup.object().shape({
+  firstName: Yup.string()
+    .required("O nome é obrigatório")
+    .min(3, "O nome deve conter ao menos 3 caracteres"),
+  lastName: Yup.string()
+    .required("O sobrenome é obrigatório")
+    .min(3, "O sobrenome deve conter ao menos 3 caracteres"),
+  email: Yup.string()
+    .required("O e-mail é obrigatório")
+    .email("E-mail inválido"),
+  password: Yup.string()
+    .required("A senha é obrigatória")
+    .min(5, "A senha deve conter ao menos 5 caracteres"),
+  confirmPassword: Yup.string()
+    .required("A senha de confirmação é obrigatória")
+    .oneOf([Yup.ref("password")], "As senhas não conferem"),
+  subscriptionPlan: Yup.string().required(),
+});
+
+const formOptions = { resolver: yupResolver(formSchema) };
+
 const SignUp = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [subscriptionPlan, setSubscriptionPlan] = useState<string>("");
   const { showLoading, hideLoading } = useLoading();
   const Alert = useAlert();
   const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpFormProps>(formOptions);
 
-  const signUp = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const signUp = (data: SignUpFormProps, event?: React.BaseSyntheticEvent) => {
+    event?.preventDefault();
+    console.log(data);
     try {
-      showLoading();
-      Alert.success.show("Cadastro realizado com sucesso!");
-      setTimeout(() => {
-        navigate(RouteNames.Login());
-      }, 5000);
+      // showLoading();
+      console.log(Alert);
+      // Alert.success.show("Cadastro realizado com sucesso!");
+      // setTimeout(() => {
+      //   navigate(RouteNames.Login());
+      // }, 5000);
     } catch (err: any) {
       console.log({ err });
       Alert.error.show();
     } finally {
-      hideLoading();
+      // hideLoading();
     }
   };
 
-  const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
+  const handleSubscriptionPlan = (event: SelectChangeEvent) => {
+    setSubscriptionPlan(event.target.value);
   };
-
-  const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
-
-  // border-radius: 20px;
-  // max-width: 300px;
-  // display: flex;
-  // margin-right: auto;
-  // margin-left: auto;
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
@@ -81,51 +113,112 @@ const SignUp = () => {
             alignItems: "center",
           }}
         >
-          <Typography component="h1" variant="h4">
+          <Typography textAlign="center" component="h1" variant="h4">
             Cadastre-se
           </Typography>
           <Typography textAlign="center" mt={2} component="h3" variant="body1">
             Crie uma conta e acesse nossa plataforma!
           </Typography>
-          <form style={{ marginTop: 40, maxWidth: 350 }} onSubmit={signUp}>
+          <form
+            data-testid="SignUp.Form"
+            style={{ marginTop: 40, maxWidth: 350 }}
+            onSubmit={handleSubmit(signUp)}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                  autoComplete="given-name"
                   name="firstName"
-                  required
                   fullWidth
+                  data-testid="FirstName.Input"
+                  inputProps={{
+                    ...register("firstName"),
+                  }}
+                  error={Boolean(errors?.firstName)}
+                  helperText={errors?.firstName?.message}
                   id="firstName"
                   label="Nome"
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   fullWidth
                   id="lastName"
+                  data-testid="LastName.Input"
+                  inputProps={{
+                    ...register("lastName"),
+                  }}
+                  error={Boolean(errors?.lastName)}
+                  helperText={errors?.lastName?.message}
                   label="Sobrenome"
                   name="lastName"
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   fullWidth
                   id="email"
+                  data-testid="Email.Input"
+                  inputProps={{
+                    ...register("email"),
+                  }}
+                  error={Boolean(errors?.email)}
+                  helperText={errors?.email?.message}
                   label="E-mail"
                   name="email"
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   fullWidth
                   name="password"
                   label="Senha"
+                  data-testid="Password.Input"
+                  inputProps={{
+                    ...register("password"),
+                  }}
+                  error={Boolean(errors?.password)}
+                  helperText={errors?.password?.message}
                   type="password"
                   id="password"
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  name="confirmPassword"
+                  label="Confirmar Senha"
+                  data-testid="ConfirmPassword.Input"
+                  inputProps={{
+                    ...register("confirmPassword"),
+                  }}
+                  error={Boolean(errors?.confirmPassword)}
+                  helperText={errors?.confirmPassword?.message}
+                  type="password"
+                  id="confirmPassword"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel id="subscription-plan-select-label">
+                    Plano
+                  </InputLabel>
+                  <Select
+                    labelId="subscription-plan-select-label"
+                    id="subscription-plan-select"
+                    data-testid="SubscriptionPlan.Select"
+                    inputProps={{
+                      ...register("subscriptionPlan"),
+                    }}
+                    value={subscriptionPlan}
+                    error={Boolean(errors?.subscriptionPlan)}
+                    label="Plano"
+                    onChange={handleSubscriptionPlan}
+                  >
+                    <MenuItem value="Free">Free</MenuItem>
+                    <MenuItem value="Premium">Premium</MenuItem>
+                    <MenuItem value="VIP">VIP</MenuItem>
+                  </Select>
+                </FormControl>
               </Grid>
             </Grid>
             <Button
@@ -133,6 +226,7 @@ const SignUp = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              data-testid="SignUp.Button"
             >
               Cadastrar
             </Button>
