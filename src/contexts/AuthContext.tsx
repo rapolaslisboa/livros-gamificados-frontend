@@ -17,7 +17,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<{ [key: string]: any } | null>(null);
 
   const authenticate = async (email: string, password: string) => {
-    // const result = await authService.login({ email, password });
+    // const result = await AuthService.login({ email, password });
     // if (!result) throw new Error("Unexpected error on login");
     // localStorage.setItem("token", result.token!);
     // localStorage.setItem("refreshToken", result.refreshToken!);

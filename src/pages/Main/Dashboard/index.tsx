@@ -145,7 +145,7 @@ const Dashboard = () => {
                   }}
                 >
                   <Typography variant="h3" component="h1">
-                    Olá, Felipe!
+                    Olá, Felipe! Seu plano é VIP
                   </Typography>
                 </Paper>
               </Grid>
