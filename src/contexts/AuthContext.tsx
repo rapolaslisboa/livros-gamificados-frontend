@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { authService } from "../services/authService";
+import { userService } from "../services/userService";
 
 interface AuthContextProps {
   authenticated: boolean;
@@ -19,14 +20,15 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
 
   const authenticate = async (email: string, password: string) => {
     const { login } = authService();
+    const { getUserInfo } = userService();
     // const result = await login({ email, password });
     // localStorage.setItem("token", result.token!);
     // localStorage.setItem("refreshToken", result.refreshToken!);
-    // const userData = await customerService.getCustomer();
-    // setUser(userData);
+    // const userInfo = await userInfo();
+    // setUser(userInfo);
     // Temporary
     setUser({});
-    // return userData;
+    // return userInfo;
   };
 
   const signOut = async () => {
