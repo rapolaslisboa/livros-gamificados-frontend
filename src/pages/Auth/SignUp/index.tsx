@@ -71,6 +71,9 @@ const SignUp = () => {
       showLoading();
       await signUp(data);
       alert("Cadastro realizado com sucesso!")
+      localStorage.setItem("completeName", `${data.firstName} ${data.lastName}`);
+      localStorage.setItem("firstName", `${data.firstName} ${data.lastName}`);
+      localStorage.setItem("subscriptionPlan", data.subscriptionPlan);
       setTimeout(() => {
         navigate(RouteNames.Login());
       }, 1000);

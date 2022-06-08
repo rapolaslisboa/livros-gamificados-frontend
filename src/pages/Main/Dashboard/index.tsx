@@ -84,7 +84,7 @@ const Dashboard = () => {
                 <IconButton color="inherit">
                   <Avatar
                     style={{ backgroundColor: "#302a55", fontSize: "1.05rem" }}
-                    {...stringAvatar(`${user?.firstName} ${user?.lastName}`)}
+                    {...stringAvatar(localStorage.getItem("completeName") as string)}
                   />
                 </IconButton>
               </Grid>
@@ -146,7 +146,7 @@ const Dashboard = () => {
                   }}
                 >
                   <Typography variant="h4" component="h1">
-                    {`Olá, ${user?.name}! Seu plano é ${user?.subscriptionPlan}`}
+                    {`Olá, ${localStorage.getItem("firstName")}! Seu plano é ${localStorage.getItem("subscriptionPlan")}`}
                   </Typography>
                 </Paper>
               </Grid>

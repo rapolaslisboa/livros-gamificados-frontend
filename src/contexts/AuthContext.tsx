@@ -24,13 +24,14 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
     const { getUserInfo } = userService();
     const response = await login({ email, password });
     localStorage.setItem("token", response.data.accessToken!);
-    const userInfo = await getUserInfo();
-    setUser(userInfo);
+    // const userInfo = await getUserInfo();
+    // setUser(userInfo);
     setUser({});
   };
 
   const signOut = async () => {
-    localStorage.clear();
+    // localStorage.clear();
+    localStorage.removeItem("token");
     sessionStorage.clear();
     setUser(null);
   };
