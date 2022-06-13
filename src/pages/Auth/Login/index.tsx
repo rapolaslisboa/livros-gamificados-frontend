@@ -88,6 +88,7 @@ const Login = () => {
             <TextField
               margin="normal"
               fullWidth
+              data-testid="Email.Input"
               id="email"
               inputProps={{
                 ...register("email"),
@@ -100,6 +101,7 @@ const Login = () => {
             <TextField
               margin="normal"
               fullWidth
+              data-testid="Password.Input"
               name="password"
               inputProps={{
                 ...register("password"),
@@ -113,6 +115,7 @@ const Login = () => {
             <Button
               type="submit"
               fullWidth
+              data-testid="Login.Button"
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
